@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 240 22% 97%;
+  --foreground: 242 20% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 242 20% 10%;
+  --primary: 255 86% 68%;
+  --primary-foreground: 0 0% 100%;
+  --muted: 238 18% 91%;
+  --muted-foreground: 242 12% 34%;
+  --border: 242 20% 84%;
+  --ring: 255 86% 68%;
+  --font-display: "Syne", "Plus Jakarta Sans", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+}
+
+.dark {
+  --background: 244 28% 6%;
+  --foreground: 236 22% 94%;
+  --card: 244 22% 9%;
+  --card-foreground: 236 22% 94%;
+  --primary: 258 95% 74%;
+  --primary-foreground: 240 20% 12%;
+  --muted: 244 18% 14%;
+  --muted-foreground: 240 12% 74%;
+  --border: 243 20% 22%;
+  --ring: 258 95% 74%;
+}
+
+* {
+  @apply border-border;
+}
+
+html,
+body {
+  @apply bg-background text-foreground antialiased;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-image:
+    radial-gradient(circle at 16% 8%, rgba(143, 102, 255, 0.16), transparent 24%),
+    radial-gradient(circle at 84% 12%, rgba(255, 126, 194, 0.14), transparent 28%),
+    radial-gradient(circle at 52% 84%, rgba(100, 137, 255, 0.14), transparent 28%),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.04) 0%, transparent 22%, rgba(255, 255, 255, 0.04) 54%, transparent 82%);
+  background-attachment: fixed;
+}
+
+.grain::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.2) 0.8px, transparent 0);
+  background-size: 3px 3px;
+}
+
+.glass-panel {
+  @apply border border-white/15 bg-white/10 backdrop-blur-xl;
+  box-shadow: 0 28px 90px -50px rgba(98, 83, 170, 0.8);
+}
+
+.section-title {
+  @apply font-display text-4xl font-semibold tracking-[-0.02em] md:text-6xl;
+}
+
+.section-subtitle {
+  @apply max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base md:leading-7;
+}
+
+@keyframes mesh-pan {
+  0% {
+    background-position: 0% 20%;
+  }
+  50% {
+    background-position: 100% 80%;
+  }
+  100% {
+    background-position: 0% 20%;
+  }
+}
+
+@keyframes ray-drift {
+  0% {
+    transform: translateX(-4%);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateX(4%);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(-4%);
+    opacity: 0.35;
+  }
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.hero-mesh::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(136, 119, 255, 0.16), transparent 30%),
+    radial-gradient(circle at 78% 16%, rgba(97, 120, 255, 0.24), transparent 34%),
+    radial-gradient(circle at 62% 84%, rgba(112, 138, 255, 0.14), transparent 34%),
+    linear-gradient(118deg, #040816 0%, #0a1127 34%, #0b1229 62%, #070d1f 100%);
+  background-size: 130% 130%;
+  animation: mesh-pan 20s ease-in-out infinite;
+  z-index: -3;
+}
+
+.hero-light-rays {
+  background-image: linear-gradient(
+    110deg,
+    transparent 0%,
+    rgba(165, 183, 255, 0.08) 32%,
+    transparent 62%,
+    rgba(145, 166, 255, 0.06) 84%,
+    transparent 100%
+  );
+  animation: ray-drift 16s ease-in-out infinite;
+  z-index: -2;
+}
+
+.hero-particles::before,
+.hero-particles::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(186, 201, 255, 0.45) 0.7px, transparent 0);
+  background-size: 4px 4px;
+  opacity: 0.1;
+  animation: particle-float 12s ease-in-out infinite;
+}
+
+.hero-particles::after {
+  background-size: 6px 6px;
+  opacity: 0.05;
+  animation-duration: 18s;
+}
+
+@keyframes wallScroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes marqueeX {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-mesh::before,
+  .hero-light-rays,
+  .hero-particles::before,
+  .hero-particles::after {
+    animation: none !important;
+  }
+}
