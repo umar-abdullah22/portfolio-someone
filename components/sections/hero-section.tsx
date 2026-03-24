@@ -109,7 +109,7 @@ export function HeroSection() {
               backgroundClip: "text",
             }}
           >
-            ZAHWER
+            ZAHEER
           </h1>
 
           <motion.p
