@@ -1,16 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  Dribbble,
-  Instagram,
   Linkedin,
   Mail,
+  MessageCircle,
   PenTool,
   Send,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+
+const WHATSAPP_NUMBER = "923004888406";
 
 const links = [
   { icon: Mail, label: "Email", href: "mailto:momnazaheer456@gmail.com" },
@@ -28,6 +30,20 @@ const fadeUp = {
 };
 
 export function ContactSection() {
+  const [name, setName] = useState("");
+  const [project, setProject] = useState("");
+
+  const handleWhatsApp = () => {
+    const message = [
+      name ? `Hi, I'm ${name}.` : "Hi!",
+      project ? `I'd like to discuss: ${project}` : "I'd like to discuss a project with you.",
+      "I found your portfolio and would love to collaborate!",
+    ].join(" ");
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  };
+
   return (
     <section id="contact" className="pb-24 pt-16 md:pb-32">
       <div className="container">
@@ -81,12 +97,23 @@ export function ContactSection() {
                   <a
                     key={link.label}
                     href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 rounded-xl border border-border bg-background/60 px-4 py-2.5 text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/10 dark:border-white/15 dark:bg-white/8"
                   >
                     <link.icon size={14} />
                     {link.label}
                   </a>
                 ))}
+                <a
+                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl border border-[#25d366]/40 bg-[#25d366]/10 px-4 py-2.5 text-sm text-foreground transition hover:bg-[#25d366]/20 dark:border-[#25d366]/30"
+                >
+                  <MessageCircle size={14} className="text-[#25d366]" />
+                  WhatsApp
+                </a>
               </motion.div>
 
               <motion.div
@@ -116,35 +143,53 @@ export function ContactSection() {
               </motion.div>
             </motion.div>
 
-            {/* ── form ── */}
-            <motion.form
+            {/* ── WhatsApp message composer ── */}
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ amount: 0.15 }}
               transition={{ delay: 0.15, duration: 0.5 }}
               className="space-y-4 rounded-[1.5rem] border border-border bg-background/80 p-6 shadow-lg backdrop-blur-xl dark:border-white/15 dark:bg-black/40"
             >
-              <p className="mb-2 text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                Send a message
-              </p>
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#25d366]/15">
+                  <MessageCircle size={18} className="text-[#25d366]" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium">Message on WhatsApp</p>
+                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                    Opens directly in WhatsApp
+                  </p>
+                </div>
+              </div>
+
               <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full rounded-xl border border-border bg-background px-4 py-3.5 text-sm text-foreground outline-none ring-primary transition placeholder:text-muted-foreground/70 focus:ring-2 dark:border-white/15 dark:bg-white/5"
                 placeholder="Your name"
               />
-              <input
-                className="w-full rounded-xl border border-border bg-background px-4 py-3.5 text-sm text-foreground outline-none ring-primary transition placeholder:text-muted-foreground/70 focus:ring-2 dark:border-white/15 dark:bg-white/5"
-                placeholder="Your email"
-              />
               <textarea
-                rows={4}
+                value={project}
+                onChange={(e) => setProject(e.target.value)}
+                rows={3}
                 className="w-full rounded-xl border border-border bg-background px-4 py-3.5 text-sm text-foreground outline-none ring-primary transition placeholder:text-muted-foreground/70 focus:ring-2 dark:border-white/15 dark:bg-white/5"
                 placeholder="Tell me about your project..."
               />
-              <Button className="w-full gap-2" size="lg">
+              <Button
+                type="button"
+                onClick={handleWhatsApp}
+                className="w-full gap-2 bg-[#25d366] text-white hover:bg-[#1fba59]"
+                size="lg"
+              >
                 <Send size={15} />
-                Send Inquiry
+                Send via WhatsApp
               </Button>
-            </motion.form>
+
+              <p className="text-center text-[10px] text-muted-foreground">
+                Your message will open in WhatsApp with a pre-filled text
+              </p>
+            </motion.div>
           </div>
         </motion.div>
       </div>
