@@ -16,7 +16,7 @@ const navItems = [
   { href: "#contact", label: "Contact" }
 ];
 
-export function SiteHeader() {
+export function SiteHeader({ brandName = "Momna Zaheer" }: { brandName?: string }) {
   const pathname = usePathname();
 
   const buildHref = (href: string) => {
@@ -37,7 +37,7 @@ export function SiteHeader() {
             href="/"
             className="font-display text-sm uppercase tracking-[0.2em] md:text-base"
           >
-            Momna Zaheer
+            {brandName}
           </Link>
           <nav className="hidden items-center gap-6 md:flex">
             {navItems.map((item) => (

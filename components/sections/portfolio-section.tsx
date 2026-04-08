@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { PortfolioGrid } from "@/components/portfolio/portfolio-grid";
 import { Button } from "@/components/ui/button";
 import { Magnetic } from "@/components/ui/magnetic";
+import { defaultProjects } from "@/lib/portfolio-defaults";
 
 const stagger = {
   hidden: {},
@@ -54,7 +55,7 @@ export function PortfolioSection() {
           </motion.div>
         </motion.div>
 
-        <PortfolioGrid featuredOnly columns="two" />
+        <PortfolioGrid projects={defaultProjects} featuredOnly columns="two" />
       </div>
     </section>
   );

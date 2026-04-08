@@ -6,7 +6,7 @@ import { useMemo } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-import { type PortfolioProject } from "@/data/projects";
+import type { PortfolioProject } from "@/lib/portfolio-types";
 
 type ProjectCardProps = {
   project: PortfolioProject;

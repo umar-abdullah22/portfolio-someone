@@ -3,24 +3,38 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { filterTabs, projects, type PortfolioCategory } from "@/data/projects";
 import { ProjectCard } from "@/components/portfolio/project-card";
+import { defaultFilterTabs } from "@/lib/portfolio-defaults";
 import { cn } from "@/lib/utils";
+import type { PortfolioCategory, PortfolioProject } from "@/lib/portfolio-types";
 
 type PortfolioGridProps = {
+  projects: PortfolioProject[];
   featuredOnly?: boolean;
   columns?: "two" | "three";
 };
 
 export function PortfolioGrid({
+  projects,
   featuredOnly = false,
   columns = "three"
 }: PortfolioGridProps) {
   const [activeFilter, setActiveFilter] = useState<PortfolioCategory | "All">("All");
+  const filterTabs = useMemo(() => {
+    const categories = Array.from(new Set(projects.map((project) => project.category)));
+
+    return [
+      defaultFilterTabs[0],
+      ...categories.map((category) => ({
+        label: category.replace(" Design", "").replace("Social Media", "Social"),
+        value: category,
+      })),
+    ];
+  }, [projects]);
 
   const baseProjects = useMemo(
     () => (featuredOnly ? projects.filter((project) => project.featured) : projects),
-    [featuredOnly]
+    [featuredOnly, projects]
   );
 
   const filtered = useMemo(() => {
